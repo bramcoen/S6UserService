@@ -1,6 +1,6 @@
 version: "2"
 services:
-  processmessage:
+  userservice:
     image: bramco/brams6userservice
     ports:
       - 443:443

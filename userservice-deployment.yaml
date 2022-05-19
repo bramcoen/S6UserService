@@ -6,13 +6,13 @@ metadata:
     kompose.version: 1.26.1 (a9d05d509)
   creationTimestamp: null
   labels:
-    io.kompose.service: processmessage
-  name: processmessage
+    io.kompose.service: userservice
+  name: userservice
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: processmessage
+      io.kompose.service: userservice
   strategy: {}
   template:
     metadata:
@@ -21,11 +21,11 @@ spec:
         kompose.version: 1.26.1 (a9d05d509)
       creationTimestamp: null
       labels:
-        io.kompose.service: processmessage
+        io.kompose.service: userservice
     spec:
       containers:
         - image: bramco/brams6userservice
-          name: processmessage
+          name: userservice
           ports:
             - containerPort: 443
             - containerPort: 80
