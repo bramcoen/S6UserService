@@ -26,6 +26,7 @@ spec:
       containers:
         - image: bramco/brams6userservice
           name: userservice
+          imagePullPolicy: Always
           ports:
             - containerPort: 443
             - containerPort: 80
