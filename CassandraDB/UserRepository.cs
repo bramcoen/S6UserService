@@ -37,10 +37,25 @@ namespace CassandraDB
         }
 
 
-        public async Task<Token> UpdateToken(string username, Token token)
+
+        public Task<User> Get(string email)
         {
-            await mapper.ExecuteAsync("UPDATE User SET token = ? AND tokenvalidity = ? WHERE name = ? IF EXISTS", token.Value,token.ValidUntil,username);
-            return token;
+            throw new NotImplementedException();
+        }
+
+        public Task<User> RegisterUser(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User> UpdateUsername(string email, string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User> RegisterOrUpdateUser(string email, string username)
+        {
+            throw new NotImplementedException();
         }
     }
 }

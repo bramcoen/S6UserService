@@ -3,11 +3,11 @@ using System.Text;
 
 namespace UserService.Services
 {
-    public class RabbitMqService
+    public class RabbitMQService
     {
         private readonly ConnectionFactory _factory;
 
-        public RabbitMqService(IConfiguration configuration)
+        public RabbitMQService(IConfiguration configuration)
         {
             _factory = new ConnectionFactory() { HostName = configuration.GetValue<string>("RabbitMQHostname") };
             using (var connection = _factory.CreateConnection())
@@ -15,7 +15,7 @@ namespace UserService.Services
             {
             }
         }
-        private void SendMessage(object obj,string exchange, string routingkey)
+        public void SendMessage(object obj, string exchange, string routingkey)
         {
             using (var connection = _factory.CreateConnection())
             using (var channel = connection.CreateModel())
@@ -26,7 +26,7 @@ namespace UserService.Services
                                      routingKey: routingkey,
                                      basicProperties: null,
                                      body: body);
-               // _logger.LogInformation(" [x] Sent {0}", message);
+                // _logger.LogInformation(" [x] Sent {0}", message);
             }
         }
     }

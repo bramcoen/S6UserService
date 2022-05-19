@@ -1,16 +1,22 @@
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace Models
 {
+    [BsonIgnoreExtraElements]
     public class User
     {
-        public User(string username)
+        public User()
         {
-            Name = username;
-        }
-        public string Email { get; set; }
 
-        public string Name { get; set; }
-        public string Id { get; set; }
-        public string? Token { get; set; }
-        public DateTime? TokenValidity { get; set; }
+        }
+        public User(string name,string email)
+        {
+            Name = name;
+            Email = email;
+        }
+        public string? Email { get; set; }
+        public string? Reference { get; set; }
+        public string? Name { get; set; }
+        public string? Id { get; set; }
     }
 }
