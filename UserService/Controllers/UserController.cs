@@ -8,6 +8,7 @@ using UserService.Services;
 namespace UserService.Controllers
 {
     [ApiController]
+    [Route("")]
     [EnableCors("default")]
     public class UserController : ControllerBase
     {
