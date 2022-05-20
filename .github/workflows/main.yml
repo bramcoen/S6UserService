@@ -85,7 +85,14 @@ jobs:
 
     - name: Save DigitalOcean kubeconfig with short-lived credentials
       run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.DIGITALOCEAN_CLUSTER }}
-
+      
+    - name: Create Secret BackendURL
+      run: kubectl delete secret userservicesecret
+      continue-on-error: true
+      
+    - name: Create Secret BackendURL
+      run: kubectl create secret generic userservicesecret --from-literal=RabbitMQHostname=${{ secrets.RabbitMQHostname }} --from-literal=MongoDBConnectionString=${{ secrets.MongoDBConnectionString }}
+   
     - name: Deploy to DigitalOcean Kubernetes
       run: kubectl apply -f $GITHUB_WORKSPACE/kubedeploy
       
