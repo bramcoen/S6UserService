@@ -90,6 +90,6 @@ jobs:
       run: kubectl apply -f $GITHUB_WORKSPACE/kubedeploy
       
     - name: Restart pods in deployment
-      run: kubectl rollout restart deploy frontend
+      run: kubectl rollout restart deploy userservice
     #- name: Verify deployment
    # run: kubectl rollout status ${{ secrets.Image_Name }}
