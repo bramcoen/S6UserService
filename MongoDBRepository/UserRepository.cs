@@ -14,7 +14,7 @@ namespace MongoDBRepository
         IMongoCollection<User> _usersCollection;
         public UserRepository(IConfiguration configuration)
         {
-            _dbClient = new MongoClient(configuration.GetSection("MongoDB")["ConnectionString"]);
+            _dbClient = new MongoClient(configuration["MongoDBConnectionString"]);
             _mongoDatabase = _dbClient.GetDatabase("S6");
             _usersCollection = _mongoDatabase.GetCollection<User>("Users");
         }

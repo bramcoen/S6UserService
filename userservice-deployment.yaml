@@ -26,6 +26,17 @@ spec:
       containers:
         - image: bramco/brams6userservice
           name: userservice
+          env:
+            - name: RabbitMQHostname
+              valueFrom:
+                secretKeyRef:
+                  name: frontendsecret
+                  key: RabbitMQHostname
+            - name: MongoDBConnectionString
+              valueFrom:
+                secretKeyRef:
+                  name: frontendsecret
+                  key: MongoDBConnectionString
           imagePullPolicy: Always
           ports:
             - containerPort: 443
