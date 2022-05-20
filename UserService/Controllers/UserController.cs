@@ -62,5 +62,11 @@ namespace UserService.Controllers
             await _userRepository.DeleteUser(email);
             return Ok();
         }
+
+        [HttpGet("test")]
+        public async Task<IActionResult> Test([FromHeader] string token)
+        {
+            return Ok("Test successfull");
+        }
     }
 }
