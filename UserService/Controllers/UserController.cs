@@ -41,7 +41,7 @@ namespace UserService.Controllers
         }
 
         [HttpGet("me")]
-        public async Task<IActionResult> Me([FromHeader] string token)
+        public async Task<IActionResult> Me()
         {
             var validationSettings = new GoogleJsonWebSignature.ValidationSettings
             {
