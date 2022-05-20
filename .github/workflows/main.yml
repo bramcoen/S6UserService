@@ -88,6 +88,8 @@ jobs:
 
     - name: Deploy to DigitalOcean Kubernetes
       run: kubectl apply -f $GITHUB_WORKSPACE/kubedeploy
-
+      
+    - name: Restart pods in deployment
+      run: kubectl rollout restart deploy frontend
     #- name: Verify deployment
    # run: kubectl rollout status ${{ secrets.Image_Name }}
