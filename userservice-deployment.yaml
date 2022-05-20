@@ -31,5 +31,6 @@ spec:
             - containerPort: 443
             - containerPort: 80
           resources: {}
+      hostname: userservice
       restartPolicy: Always
 status: {}
