@@ -30,12 +30,12 @@ spec:
             - name: RabbitMQHostname
               valueFrom:
                 secretKeyRef:
-                  name: frontendsecret
+                  name: userservicesecret
                   key: RabbitMQHostname
             - name: MongoDBConnectionString
               valueFrom:
                 secretKeyRef:
-                  name: frontendsecret
+                  name: userservicesecret
                   key: MongoDBConnectionString
           imagePullPolicy: Always
           ports:
