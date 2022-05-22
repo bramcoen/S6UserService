@@ -10,7 +10,7 @@ builder.Services.AddCors(options => {
 });
 builder.Services.AddControllers(); 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-//builder.Services.AddSingleton<RabbitMQService>();
+builder.Services.AddSingleton<RabbitMQService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
