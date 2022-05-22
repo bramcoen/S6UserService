@@ -13,8 +13,7 @@ spec:
   selector:
     matchLabels:
       io.kompose.service: userservice
-  strategy:
-    type: RollingUpdate
+  strategy: {}
   template:
     metadata:
       annotations:
@@ -27,21 +26,9 @@ spec:
       containers:
         - image: bramco/brams6userservice
           name: userservice
-          env:
-            - name: RabbitMQHostname
-              valueFrom:
-                secretKeyRef:
-                  name: userservicesecret
-                  key: RabbitMQHostname
-            - name: MongoDBConnectionString
-              valueFrom:
-                secretKeyRef:
-                  name: userservicesecret
-                  key: MongoDBConnectionString
-          imagePullPolicy: Always
           ports:
+            - containerPort: 443
             - containerPort: 80
           resources: {}
-      hostname: userservice
       restartPolicy: Always
 status: {}
