@@ -9,8 +9,8 @@ builder.Services.AddCors(options => {
     options.AddPolicy("default", build => build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader());
 });
 builder.Services.AddControllers(); 
-builder.Services.AddSingleton<IUserRepository, UserRepository>();
-builder.Services.AddSingleton<RabbitMQService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+//builder.Services.AddSingleton<RabbitMQService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
