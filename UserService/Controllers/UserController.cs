@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using UserService.Services;
+using static Google.Apis.Auth.GoogleJsonWebSignature;
 
 namespace UserService.Controllers
 {
@@ -17,40 +18,37 @@ namespace UserService.Controllers
         private readonly ILogger<UserController> _logger;
         private readonly RabbitMQService _rabbitMQService;
         private readonly IConfiguration _configuration;
-
+        private readonly ValidationSettings _validationSettings;
         public UserController(ILogger<UserController> logger, IUserRepository userRepository, RabbitMQService rabbitMQService, IConfiguration configuration)
         {
             _logger = logger;
             _userRepository = userRepository;
             _rabbitMQService = rabbitMQService;
             _configuration = configuration;
+            _validationSettings = new GoogleJsonWebSignature.ValidationSettings
+            {
+                Audience = new string[] { _configuration["GOOGLE_CLIENT_ID"] }
+            };
         }
 
         [HttpPut("username")]
         public async Task<IActionResult> RegisterAsync([FromBody] User user, [FromHeader]string token)
         {
-            var validationSettings = new GoogleJsonWebSignature.ValidationSettings
-            {
-                Audience = new string[] { _configuration["GOOGLE_CLIENT_ID"] }
-            };
 
-            GoogleJsonWebSignature.Payload? payload = await GoogleJsonWebSignature.ValidateAsync(token, validationSettings);
+
+            Payload? payload = await GoogleJsonWebSignature.ValidateAsync(token, _validationSettings);
 
             if (user.Name == null) throw new Exception("user.name is required");
             _logger.Log(LogLevel.Information, $"Updated user username to {user.Name}");
-
-            return Ok(await _userRepository.RegisterOrUpdateUser(payload.Email, user.Name));
+            var editedUser = await _userRepository.RegisterOrUpdateUser(payload.Email, user.Name);
+            _rabbitMQService.SendMessage(editedUser, "user", "edit");
+            return Ok(editedUser);
         }
 
         [HttpGet("me")]
         public async Task<IActionResult> Me([FromHeader] string token)
         {
-            var validationSettings = new GoogleJsonWebSignature.ValidationSettings
-            {
-                Audience = new string[] { _configuration["GOOGLE_CLIENT_ID"] }
-            };
-
-            GoogleJsonWebSignature.Payload? payload = await GoogleJsonWebSignature.ValidateAsync(token, validationSettings);
+            Payload? payload = await GoogleJsonWebSignature.ValidateAsync(token, _validationSettings);
 
             if (token == null) throw new Exception("Call can't be done while the user is not logged in.");
             var user =  await _userRepository.Get(payload.Email);
@@ -63,12 +61,6 @@ namespace UserService.Controllers
             _logger.LogInformation($"Deleted user {email}");
             await _userRepository.DeleteUser(email);
             return Ok();
-        }
-
-        [HttpGet("test")]
-        public async Task<IActionResult> Test()
-        {
-            return Ok("Test successfull");
         }
     }
 }

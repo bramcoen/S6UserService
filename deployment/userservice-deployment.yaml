@@ -38,6 +38,16 @@ spec:
                 secretKeyRef:
                   name: userservicesecret
                   key: MongoDBConnectionString            
+            - name: RabbitMQUsername
+              valueFrom:
+                secretKeyRef:
+                  name: userservicesecret
+                  key: RabbitMQUsername            
+            - name: RabbitMQPassword
+              valueFrom:
+                secretKeyRef:
+                  name: userservicesecret
+                  key: RabbitMQPassword
             - name: GOOGLE_CLIENT_ID
               valueFrom:
                 secretKeyRef:

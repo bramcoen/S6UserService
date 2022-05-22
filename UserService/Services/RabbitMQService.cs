@@ -9,11 +9,7 @@ namespace UserService.Services
 
         public RabbitMQService(IConfiguration configuration)
         {
-            _factory = new ConnectionFactory() { HostName = configuration.GetValue<string>("RabbitMQHostname") };
-            using (var connection = _factory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-            }
+            _factory = new ConnectionFactory() { HostName = configuration.GetValue<string>("RabbitMQHostname"), UserName = "RabbitMQUsername", Password = "RabbitMQPassword" };
         }
         public void SendMessage(object obj, string exchange, string routingkey)
         {
