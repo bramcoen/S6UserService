@@ -46,7 +46,8 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
   build:
-    name: Build, push, and deploy
+    needs: review
+    name: Build, push
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -66,6 +67,11 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
 #Deploy Docker repository
+  deploy:
+    needs: build
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
     - name: Extract metadata (tags, labels) for Docker
       id: meta
       uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
