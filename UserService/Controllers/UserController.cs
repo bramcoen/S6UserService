@@ -16,12 +16,14 @@ namespace UserService.Controllers
         private readonly IUserRepository _userRepository;
         private readonly ILogger<UserController> _logger;
         private readonly RabbitMQService _rabbitMQService;
+        private readonly IConfiguration _configuration;
 
-        public UserController(ILogger<UserController> logger, IUserRepository userRepository, RabbitMQService rabbitMQService)
+        public UserController(ILogger<UserController> logger, IUserRepository userRepository, RabbitMQService rabbitMQService, IConfiguration configuration)
         {
             _logger = logger;
             _userRepository = userRepository;
             _rabbitMQService = rabbitMQService;
+            _configuration = configuration;
         }
 
         [HttpPut("username")]
@@ -29,7 +31,7 @@ namespace UserService.Controllers
         {
             var validationSettings = new GoogleJsonWebSignature.ValidationSettings
             {
-                Audience = new string[] { "114863223576-opgrpdfn0no05gubdpo0h4p9a8fereuq.apps.googleusercontent.com" }
+                Audience = new string[] { _configuration["GOOGLE_CLIENT_ID"] }
             };
 
             GoogleJsonWebSignature.Payload? payload = await GoogleJsonWebSignature.ValidateAsync(token, validationSettings);
@@ -45,7 +47,7 @@ namespace UserService.Controllers
         {
             var validationSettings = new GoogleJsonWebSignature.ValidationSettings
             {
-                Audience = new string[] { "114863223576-opgrpdfn0no05gubdpo0h4p9a8fereuq.apps.googleusercontent.com" }
+                Audience = new string[] { _configuration["GOOGLE_CLIENT_ID"] }
             };
 
             GoogleJsonWebSignature.Payload? payload = await GoogleJsonWebSignature.ValidateAsync(token, validationSettings);
