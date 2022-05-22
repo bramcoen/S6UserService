@@ -37,7 +37,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: userservicesecret
-                  key: MongoDBConnectionString
+                  key: MongoDBConnectionString            
+            - name: GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: userservicesecret
+                  key: GOOGLE_CLIENT_ID
           imagePullPolicy: Always
           ports:
             - containerPort: 80
