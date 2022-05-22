@@ -46,7 +46,7 @@ jobs:
 
   build:
     needs: review
-    name: Build, push
+    name: Build, test
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -110,11 +110,11 @@ jobs:
       run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.DIGITALOCEAN_CLUSTER }}
 
 #Deploy secrets
-    - name: Create Secret BackendURL
+    - name: Create Secret userservicesecret
       run: kubectl delete secret userservicesecret
       continue-on-error: true
       
-    - name: Create Secret BackendURL
+    - name: Create Secret userservicesecret
       run: kubectl create secret generic userservicesecret --from-literal=RabbitMQHostname=${{ secrets.RabbitMQHostname }} --from-literal=MongoDBConnectionString=${{ secrets.MongoDBConnectionString }}
    
 
