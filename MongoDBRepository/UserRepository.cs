@@ -16,7 +16,7 @@ namespace MongoDBRepository
         {
             _dbClient = new MongoClient(configuration["MongoDBConnectionString"]);
             _mongoDatabase = _dbClient.GetDatabase("S6");
-            _usersCollection = _mongoDatabase.GetCollection<User>("Users");
+            _usersCollection = _mongoDatabase.GetCollection<User>("User_Users");
         }
 
         public async Task DeleteUser(string email)
