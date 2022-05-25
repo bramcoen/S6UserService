@@ -37,12 +37,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: userservicesecret
-                  key: MongoDBConnectionString            
+                  key: MongoDBConnectionString
             - name: RabbitMQUsername
               valueFrom:
                 secretKeyRef:
                   name: userservicesecret
-                  key: RabbitMQUsername            
+                  key: RabbitMQUsername
             - name: RabbitMQPassword
               valueFrom:
                 secretKeyRef:
