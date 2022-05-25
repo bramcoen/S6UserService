@@ -9,7 +9,7 @@ namespace UserService.Services
 
         public RabbitMQService(IConfiguration configuration)
         {
-            _factory = new ConnectionFactory() { HostName = "rabbitmq", UserName = "RabbitMQUsername", Password = "RabbitMQPassword" };
+            _factory = new ConnectionFactory() { HostName = "rabbitmq.default.cluster.local", UserName = "RabbitMQUsername", Password = "RabbitMQPassword" };
         }
         public void SendMessage(object obj, string exchange, string routingkey)
         {
