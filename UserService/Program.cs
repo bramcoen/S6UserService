@@ -14,14 +14,16 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<RabbitMQService>();
 var app = builder.Build();
 
-app.UseRouting();
+
+app.UseRouting(); 
+app.UseCors();
 // Configure the HTTP request pipeline.
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapMetrics();
 });
 app.UseHttpsRedirection();
-app.UseCors();
+
 
 app.MapControllers();
 
