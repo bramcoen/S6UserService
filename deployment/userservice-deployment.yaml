@@ -48,6 +48,11 @@ spec:
                 secretKeyRef:
                   name: userservicesecret
                   key: RabbitMQPassword
+            - name: EmailToken
+              valueFrom:
+                secretKeyRef:
+                  name: userservicesecret
+                  key: EmailToken
             - name: GOOGLE_CLIENT_ID
               valueFrom:
                 secretKeyRef:
